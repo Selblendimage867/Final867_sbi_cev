@@ -21,7 +21,7 @@ cd Final867_sbi_cev
 Setup Python environment using conda:<br>
 For SBI training
 ```
-conda env create --file environment.yml
+conda env create --file environment_SBI.yml
 conda activate sbi
 export PYTHONPATH=.
 ```
@@ -111,7 +111,7 @@ We will post our pretrained models soon, but you are recommended to train them y
 
 Then, issue the following commands for evaluating a given model giving the pre-trained model path and the configuration file available in the config directory:
 ```
-python3 test_sbi.py --model_path "pretrained_models/[model]" --config "configs/architecture.yaml"
+python3 test_sbi.py --model_path "pretrained_model_path" --config "configs/architecture.yaml"
 ```
 
 By default the command will test on DFDC dataset but you can customize the following parameters for both the architectures:
