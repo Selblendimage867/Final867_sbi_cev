@@ -8,9 +8,9 @@ The template is also copied from Cross-efficient-vit.
 # Setup
 Clone the repository and move into it:
 ```
-git clone https://github.com/davide-coccomini/Combining-EfficientNet-and-Vision-Transformers-for-Video-Deepfake-Detection.git
+git clone https://github.com/Selblendimage867/Final867_sbi_cev.git
 
-cd Combining-EfficientNet-and-Vision-Transformers-for-Video-Deepfake-Detection
+cd Final867_sbi_cev
 ```
 
 Setup Python environment using conda:
