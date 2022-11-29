@@ -17,13 +17,13 @@ Setup Python environment using conda:<br>
 For SBI training
 ```
 conda env create --file environment.yml
-conda activate deepfakes
+conda activate sbi
 export PYTHONPATH=.
 ```
 For vanilla cross-efficient-vit:
 ```
 conda env create --file environment.yml
-conda activate deepfakes
+conda activate testnet
 export PYTHONPATH=.
 ```
 
