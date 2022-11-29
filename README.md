@@ -39,8 +39,9 @@ Download and extract the dataset you want to use from:
 
 
 # Preprocess the data
-During preprocessing, there might be cases that you have encountered bugs with directories, I have make a comment in the get_video_path() function in preprocess/utils.py
-Try to play with the comments and your program will run without bugs. Don't worry, this will not affect the training.
+During preprocessing, there might be cases that you have encountered bugs with directories, I have make a comment in the get_video_path() function in preprocess/utils.py<br>
+Try to play with the comments and your program will run without bugs.<br>
+Don't worry, this will not affect the training.<br>
 
 If you run SBI implementation:
 ```
@@ -55,8 +56,10 @@ python3 detect_faces.py --data_path "path/to/videos"
 The path to videos means the root video folder<br>
 By default the consideted dataset structure will be the one of DFDC but you can customize it with the following parameter:
 - --dataset: Dataset (DFDC / FACEFORENSICS)<br>
+For SBI implementation:<br>
+You will see a boxes folder at the Final867_sbi_cev directory.<br>
 
-
+For vanilla implementation:
 The extracted boxes will be saved inside the "path/to/videos/boxes" folder.
 In order to get the best possible result, make sure that at least one face is identified in each video. If not, you can reduce the threshold values of the MTCNN on line 38 of face_detector.py and run the command again until at least one detection occurs.
 At the end of the execution of face_detector.py an error message will appear if the detector was unable to find faces inside some videos.
