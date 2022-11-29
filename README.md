@@ -9,7 +9,7 @@ The template is also copied from Cross-efficient-vit.<br>
 Another word, if you are not familiar with Deepfakes, the code might turn out be buggy to you.<br>
 Sometimes you should try to tune your environment or simply ask google<br>
 Most of the neural network implementation will behave odd on other machines, it is not uncommon, I referenced from published papers and their vanilla code still have bugs.<br>
-Stay calm and raise any questions you encounter.<br>
+Stay calm and raise any issues you encounter.<br>
 # Setup
 Clone the repository and move into it:
 ```
