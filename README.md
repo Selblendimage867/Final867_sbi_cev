@@ -13,7 +13,14 @@ git clone https://github.com/Selblendimage867/Final867_sbi_cev.git
 cd Final867_sbi_cev
 ```
 
-Setup Python environment using conda:
+Setup Python environment using conda:<br>
+For SBI training
+```
+conda env create --file environment.yml
+conda activate deepfakes
+export PYTHONPATH=.
+```
+For vanilla cross-efficient-vit:
 ```
 conda env create --file environment.yml
 conda activate deepfakes
