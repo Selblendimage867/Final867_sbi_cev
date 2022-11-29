@@ -25,6 +25,17 @@ conda env create --file environment.yml
 conda activate sbi
 export PYTHONPATH=.
 ```
+For SBI training, you need to reinstall albumentations to make sure it in the latest version
+```
+pip uninstall albumentations
+pip install -U albumentations
+```
+For testing
+```
+conda env create --file environment.yml
+conda activate testnet
+export PYTHONPATH=.
+```
 
 # Get the data
 Download and extract the dataset you want to use from:
