@@ -4,7 +4,11 @@ Merging the two exsiting projects together and optimization on exisiting code<br
 Code references:
 Self-blend-iamge : https://github.com/mapooon/selfblendedimages <br>
 Cross_efficient-vit: https://github.com/Selblendimage867/Combining-EfficientNet-and-Vision-Transformers-for-Video-Deepfake-Detection <br>
-The template is also copied from Cross-efficient-vit.
+The template is also copied from Cross-efficient-vit.<br>
+Another word, if you are not familiar with Deepfakes, the code might turn out be buggy to you.<br>
+Sometimes you should try to tune your environment or simply ask google<br>
+Most of the neural network implementation will behave odd on other machines, it is not uncommon, I referenced from published papers and the code still have bugs.<br>
+Stay calm and raise any questions you encounter.<br>
 # Setup
 Clone the repository and move into it:
 ```
@@ -35,16 +39,22 @@ Download and extract the dataset you want to use from:
 
 
 # Preprocess the data
-The preprocessing phase is based on <a href="https://github.com/selimsef/dfdc_deepfake_challenge">Selim Seferbekov implementation</a>.
+During preprocessing, there might be cases that you have encountered bugs with directories, I have make a comment in the get_video_path() function in preprocess/utils.py
+Try to play with the comments and your program will run without bugs. Don't worry, this will not affect the training.
 
-In order to perform deepfake detection it is necessary to first identify and extract faces from all the videos in the dataset.
-Detect the faces inside the videos:
+If you run SBI implementation:
+```
+cd preprocessing
+python3 detect_faces_sbi.py --data_path "path/to/videos"
+```
+If you run the vanilla implementation:
 ```
 cd preprocessing
 python3 detect_faces.py --data_path "path/to/videos"
 ```
+The path to videos means the root video folder<br>
 By default the consideted dataset structure will be the one of DFDC but you can customize it with the following parameter:
-- --dataset: Dataset (DFDC / FACEFORENSICS)
+- --dataset: Dataset (DFDC / FACEFORENSICS)<br>
 
 
 The extracted boxes will be saved inside the "path/to/videos/boxes" folder.
@@ -56,7 +66,7 @@ If you want to manually check that at least one face has been identified in each
 cd path/to/videos/boxes
 ls | wc -l
 ```
-
+If you run SBI implementation
 Extract the detected faces obtaining the images:
 ```
 python3 extract_crops.py --data_path "path/to/videos" --output_path "path/to/output"
