@@ -56,6 +56,7 @@ python3 detect_faces.py --data_path "path/to/videos"
 The path to videos means the root video folder<br>
 By default the consideted dataset structure will be the one of DFDC but you can customize it with the following parameter:
 - --dataset: Dataset (DFDC / FACEFORENSICS)<br>
+
 For SBI implementation:<br>
 You will see a boxes folder at the Final867_sbi_cev directory.<br>
 
@@ -69,7 +70,11 @@ If you want to manually check that at least one face has been identified in each
 cd path/to/videos/boxes
 ls | wc -l
 ```
-If you run SBI implementation
+#Facecropping
+For SBI implementation:
+```
+python3 crop_dlib.py --data_path "path/to/videos" --output_path "path/to/output"
+```
 Extract the detected faces obtaining the images:
 ```
 python3 extract_crops.py --data_path "path/to/videos" --output_path "path/to/output"
