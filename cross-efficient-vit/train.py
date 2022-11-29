@@ -22,7 +22,7 @@ from transforms.albu import IsotropicResize
 import glob
 import pandas as pd
 from tqdm import tqdm
-from utils import get_method, check_correct, resize, shuffle_dataset, get_n_params
+from utils.util import get_method, check_correct, resize, shuffle_dataset, get_n_params
 from sklearn.utils.class_weight import compute_class_weight 
 from torch.optim import lr_scheduler
 import collections
@@ -31,7 +31,7 @@ import math
 import yaml
 import argparse
 
-BASE_DIR = '../../deep_fakes/'
+BASE_DIR = 'deep_fakes/'
 DATA_DIR = os.path.join(BASE_DIR, "dataset")
 TRAINING_DIR = os.path.join(DATA_DIR, "training_set")
 VALIDATION_DIR = os.path.join(DATA_DIR, "validation_set")
@@ -142,7 +142,7 @@ if __name__ == "__main__":
     
     opt = parser.parse_args()
     print(opt)
-
+    #create logfile
     with open(opt.config, 'r') as ymlfile:
         config = yaml.safe_load(ymlfile)
  
@@ -179,7 +179,7 @@ if __name__ == "__main__":
                 if os.path.isdir(os.path.join(subfolder, video_folder_name)):
                     paths.append(os.path.join(subfolder, video_folder_name))
                 
-
+    #changes to data reading method
     mgr = Manager()
     train_dataset = mgr.list()
     validation_dataset = mgr.list()
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     train_dataset = shuffle_dataset(train_dataset)
     validation_samples = len(validation_dataset)
     validation_dataset = shuffle_dataset(validation_dataset)
-
+    #changes done to reading method
     # Print some useful statistics
     print("Train images:", len(train_dataset), "Validation images:", len(validation_dataset))
     print("__TRAINING STATS__")
@@ -282,9 +282,9 @@ if __name__ == "__main__":
         train_correct /= train_samples
         total_loss /= counter
         for index, (val_images, val_labels) in enumerate(val_dl):
-    
+        
             val_images = np.transpose(val_images, (0, 3, 1, 2))
-            
+        
             val_images = val_images.cuda()
             val_labels = val_labels.unsqueeze(1)
             val_pred = model(val_images)
@@ -317,6 +317,7 @@ if __name__ == "__main__":
         
         if not os.path.exists(MODELS_PATH):
             os.makedirs(MODELS_PATH)
-        torch.save(model.state_dict(), os.path.join(MODELS_PATH,  "efficientnet_checkpoint" + str(t) + "_" + opt.dataset))
+        if t%10 == 0:
+            torch.save(model.state_dict(), os.path.join(MODELS_PATH,  "efficientnet_checkpoint" + str(t) + "_" + opt.dataset))
         
         

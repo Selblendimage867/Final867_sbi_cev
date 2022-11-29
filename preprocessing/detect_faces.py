@@ -13,6 +13,9 @@ from face_detector import VideoFaceDetector
 from utils import get_video_paths, get_method
 import argparse
 
+#import dlib
+#from imutils import face_utils
+
 
 def process_videos(videos, detector_cls: Type[VideoFaceDetector], selected_dataset, opt):
     detector = face_detector.__dict__[detector_cls](device="cuda:0")
@@ -21,16 +24,47 @@ def process_videos(videos, detector_cls: Type[VideoFaceDetector], selected_datas
     
     loader = DataLoader(dataset, shuffle=False, num_workers=opt.processes, batch_size=1, collate_fn=lambda x: x)
     missed_videos = []
+     
+
+
+    # generate face detectors for landmarks
+    #face_detector_landmark = dlib.get_frontal_face_detector()
+    #predictor_path = './shape_predictor_81_face_landmarks.dat'
+    #face_predictor = dlib.shape_predictor(predictor_path)
+
     for item in tqdm(loader): 
         result = {}
+        result_landmark = {}
         video, indices, frames = item[0]
         if selected_dataset == 1:
             method = get_method(video, opt.data_path)
             out_dir = os.path.join(opt.data_path, "boxes", method)
+            #out_dirl = os.path.join(opt.data_path, "landmarks", method)
         else:
             out_dir = os.path.join(opt.data_path, "boxes")
+            #out_dirl = os.path.join(opt.data_path, "landmarks", method)
 
         id = os.path.splitext(os.path.basename(video))[0]
+
+        #faces = face_detector_landmark(frames, 1)
+        
+        # generate landmarks
+        #landmarks=[]
+        #size_list=[]
+        '''
+        for face_idx in range(len(faces)):
+            landmark = face_predictor(frames, faces[face_idx])
+            landmark = face_utils.shape_to_np(landmark)
+            x0,y0=landmark[:,0].min(),landmark[:,1].min()
+            x1,y1=landmark[:,0].max(),landmark[:,1].max()
+            face_s=(x1-x0)*(y1-y0)
+            size_list.append(face_s)
+            landmarks.append(landmark)
+
+        landmarks=np.concatenate(landmarks).reshape((len(size_list),)+landmark.shape)
+        landmarks=landmarks[np.argsort(np.array(size_list))[::-1]]
+        '''      
+        # generate boxes and landmark path
 
         if os.path.exists(out_dir) and "{}.json".format(id) in os.listdir(out_dir):
             continue
@@ -39,7 +73,9 @@ def process_videos(videos, detector_cls: Type[VideoFaceDetector], selected_datas
         for j, frames in enumerate(batches):
             result.update({int(j * detector._batch_size) + i : b for i, b in zip(indices, detector._detect_faces(frames))})
         
-       
+        #for k, frames in enumerate(batches):
+            #result_landmark.update({int(k * detector._batch_size) + i : b for i, b in zip(indices, landmarks)})
+        
         os.makedirs(out_dir, exist_ok=True)
         print(len(result))
         if len(result) > 0:
@@ -47,7 +83,15 @@ def process_videos(videos, detector_cls: Type[VideoFaceDetector], selected_datas
                 json.dump(result, f)
         else:
             missed_videos.append(id)
-
+        '''
+        os.makedirs(out_dirl, exist_ok=True)
+        print(len(result_landmark))
+        if len(result_landmark) > 0:
+            with open(os.path.join(out_dirl, "{}.json".format(id)), "w") as g:
+                json.dump(result_landmark, g)
+        else:
+            missed_videos.append(id) 
+        '''        
     if len(missed_videos) > 0:
         print("The detector did not find faces inside the following videos:")
         print(id)
@@ -65,7 +109,9 @@ def main():
     parser.add_argument("--processes", help="Number of processes", default=1)
     opt = parser.parse_args()
     print(opt)
+    
 
+    
 
     if opt.dataset.upper() == "DFDC":
         dataset = 0

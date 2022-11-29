@@ -25,8 +25,9 @@ def extract_video(video, root_dir, dataset):
             bboxes_path = os.path.join(opt.data_path, "boxes", os.path.splitext(os.path.basename(video))[0] + ".json")
         else:
             bboxes_path = os.path.join(opt.data_path, "boxes", get_method_from_name(video), os.path.splitext(os.path.basename(video))[0] + ".json")
-        
+            video_path = get_method_from_name(video)
         if not os.path.exists(bboxes_path) or not os.path.exists(video):
+            print("no videos")
             return
         with open(bboxes_path, "r") as bbox_f:
             bboxes_dict = json.load(bbox_f)
@@ -72,9 +73,9 @@ def extract_video(video, root_dir, dataset):
 
             
             
-            os.makedirs(os.path.join(opt.output_path, id), exist_ok=True)
+            os.makedirs(os.path.join(opt.output_path,video_path, id), exist_ok=True)
             for j, crop in enumerate(crops):
-                cv2.imwrite(os.path.join(opt.output_path, id, "{}_{}.png".format(i, j)), crop)
+                cv2.imwrite(os.path.join(opt.output_path,video_path, id, "{}_{}.png".format(i, j)), crop)
         if counter == 0:
             print(video, counter)
     except e:

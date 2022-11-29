@@ -15,6 +15,8 @@ from PIL import Image
 from facenet_pytorch.models.mtcnn import MTCNN
 from torch.utils.data import Dataset
 
+import dlib
+from tqdm import tqdm
 
 class VideoFaceDetector(ABC):
 
@@ -30,6 +32,10 @@ class VideoFaceDetector(ABC):
     def _detect_faces(self, frames) -> List:
         pass
 
+'''   @abstractmethod
+    def _detect_landmarks(self, frames) -> List:
+        pass'''
+
 
 class FacenetDetector(VideoFaceDetector):
 
@@ -41,6 +47,21 @@ class FacenetDetector(VideoFaceDetector):
         batch_boxes, *_ = self.detector.detect(frames, landmarks=False)
         return [b.tolist() if b is not None else None for b in batch_boxes]
 
+    '''def _detect_landmarks(self, frames) -> List:
+        face_detector = dlib.get_frontal_face_detector()
+        predictor_path = 'src/preprocess/shape_predictor_81_face_landmarks.dat'
+        face_predictor = dlib.shape_predictor(predictor_path)
+        faces = face_detector(frame, 1)
+
+        if len(faces)==0:
+            tqdm.write('No faces in {}:{}'.format(cnt_frame,os.path.basename(org_path)))
+            continue
+        face_s_max=-1
+        landmarks=[]
+
+        *_, batch_landmarks = self.detector.detect(frames, landmarks=True)
+        return [b.tolist() if b is not None else None for b in batch_landmarks]
+'''
     @property
     def _batch_size(self):
         return 32

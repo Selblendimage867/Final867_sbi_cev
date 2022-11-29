@@ -304,4 +304,7 @@ class CrossEfficientViT(nn.Module):
         sm_logits = self.sm_mlp_head(sm_cls)
         lg_logits = self.lg_mlp_head(lg_cls)
 
+        result = sm_logits + lg_logits
+        
+
         return sm_logits + lg_logits

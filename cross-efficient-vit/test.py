@@ -11,12 +11,12 @@ import torch
 from torch import nn, einsum
 from sklearn.metrics import plot_confusion_matrix
 
-from utils import get_method, check_correct, resize, shuffle_dataset, get_n_params
+from utils.util import get_method, check_correct, resize, shuffle_dataset, get_n_params
 import torch.nn as nn
 import torch.nn.functional as F
 from functools import partial
 from cross_efficient_vit import CrossEfficientViT
-from utils import transform_frame
+from utils.util import transform_frame
 import glob
 from os import cpu_count
 import json
@@ -25,7 +25,7 @@ from progress.bar import Bar
 import pandas as pd
 from tqdm import tqdm
 from multiprocessing import Manager
-from utils import custom_round, custom_video_round
+from utils.util import custom_round, custom_video_round
 from albumentations import Compose, RandomBrightnessContrast, \
     HorizontalFlip, FancyPCA, HueSaturationValue, OneOf, ToGray, \
     ShiftScaleRotate, ImageCompression, PadIfNeeded, GaussNoise, GaussianBlur, Rotate
@@ -38,7 +38,7 @@ import argparse
 #########################
 
 MODELS_DIR = "models"
-BASE_DIR = "../../deep_fakes"
+BASE_DIR = "deep_fakes"
 DATA_DIR = os.path.join(BASE_DIR, "dataset")
 TEST_DIR = os.path.join(DATA_DIR, "test_set")
 OUTPUT_DIR = os.path.join(MODELS_DIR, "tests")
@@ -172,7 +172,7 @@ if __name__ == "__main__":
                         help="Which configuration to use. See into 'config' folder.")
     parser.add_argument('--efficient_net', type=int, default=0, 
                         help="Which EfficientNet version to use (0 or 7, default: 0)")
-    parser.add_argument('--frames_per_video', type=int, default=30, 
+    parser.add_argument('--frames_per_video', type=int, default=10, 
                         help="How many equidistant frames for each video (default: 30)")
     parser.add_argument('--batch_size', type=int, default=32, 
                         help="Batch size (default: 32)")
@@ -195,7 +195,7 @@ if __name__ == "__main__":
 
     model_name = os.path.basename(opt.model_path)
 
-
+    print(TEST_DIR)
     #########################
     ####### EXECUTION #######
     #########################
@@ -256,6 +256,8 @@ if __name__ == "__main__":
                     continue
                 faces = np.transpose(faces, (0, 3, 1, 2))
                 faces = faces.cuda().float()
+
+            
                 
                 pred = model(faces)
                 

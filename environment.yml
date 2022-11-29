@@ -1,4 +1,4 @@
-name: deepfakes
+name: testnet
 channels:
   - pytorch
   - defaults
@@ -209,4 +209,4 @@ dependencies:
     - wrapt==1.12.1
     - xmltodict==0.12.0
     - yacs==0.1.8
-prefix: /home/coccomini/miniconda3/envs/deepfakes
+prefix: /home/coccomini/miniconda3/envs/testnet
