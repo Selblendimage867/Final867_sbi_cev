@@ -2,7 +2,7 @@
 
 Merging the two exsiting projects together and optimization on exisiting code<br>
 Code references:
-Self-blend-iamge : https://github.com/mapooon/selfblendedimages <br>
+Self-blend-image : https://github.com/mapooon/selfblendedimages <br>
 Cross_efficient-vit: https://github.com/Selblendimage867/Combining-EfficientNet-and-Vision-Transformers-for-Video-Deepfake-Detection <br>
 I will only introduce the sbi implementation here, for the use of vanilla cross-efficient-nent, refer to the link above.<br>
 The template is also copied from Cross-efficient-vit.<br>
