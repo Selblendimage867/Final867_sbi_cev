@@ -97,7 +97,7 @@ After you have done all the steps, do this for boxes, frames and landmark folder
         ...
             ...
  ```
-The vanila implementaitons also requires you to manually do the test-train data split, don't blame me for not making your life easier, even top researchers don't pay attention to this.<br> 
+The vanila implementaitons also requires you to manually do the test-train data split.
 
 # Evaluate
 Move into the choosen architecture folder you want to evaluate and download the pre-trained model:<br>
